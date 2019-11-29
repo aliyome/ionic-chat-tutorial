@@ -14,6 +14,10 @@ export class AuthService {
     private readonly alertController: AlertController,
   ) {}
 
+  getUserId(): string {
+    return this.afAuth.auth.currentUser.uid;
+  }
+
   authSignUp(login: Auth) {
     return this.afAuth.auth
       .createUserWithEmailAndPassword(login.email, login.password)
