@@ -34,7 +34,7 @@
         type="submit"
         shape="round"
         routerLink="/"
-        [disabled]="!f.form.valid"
+        [disabled]="!f.form.valid || loading"
       >
         新規登録
       </ion-button>

@@ -9,12 +9,16 @@ import { Auth } from '../auth';
 })
 export class SignupPage implements OnInit {
   login: Auth = { email: null, password: null };
+  loading = false;
 
   constructor(private readonly auth: AuthService) {}
 
   ngOnInit() {}
 
   signUp() {
-    this.auth.authSignUp(this.login);
+    this.loading = true;
+    this.auth.authSignUp(this.login).finally(() => {
+      this.loading = false;
+    });
   }
 }
