@@ -1,0 +1,8 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "chat-tutorial",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "www",
+  "cordova": {}
+}
