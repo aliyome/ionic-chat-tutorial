@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { Plugins, CameraResultType } from '@capacitor/core';
 
 @Component({
   selector: 'app-profile',
@@ -6,10 +8,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  uid: string;
+  user = {
+    displayName: null,
+    photoDataUrl: null,
+  };
+  photo: string;
 
-  constructor() { }
+  constructor(private readonly modalController: ModalController) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  modalDismiss() {
+    this.modalController.dismiss();
   }
 
+  async takePicture() {
+    const image = await Plugins.Camera.getPhoto({
+      quality: 100,
+      resultType: CameraResultType.DataUrl,
+    });
+    this.photo = image && image.dataUrl;
+  }
 }
