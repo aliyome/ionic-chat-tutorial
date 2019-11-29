@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { ModalController } from '@ionic/angular';
+import { ProfilePage } from '../shared/profile/profile.page';
 
 @Component({
   selector: 'app-tab2',
@@ -7,7 +9,17 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['tab2.page.scss'],
 })
 export class Tab2Page {
-  constructor(private readonly auth: AuthService) {}
+  constructor(
+    private readonly auth: AuthService,
+    private readonly modalController: ModalController,
+  ) {}
+
+  async openProfile() {
+    const modal = await this.modalController.create({
+      component: ProfilePage,
+    });
+    modal.present();
+  }
 
   signOut() {
     this.auth.authSignOut();
