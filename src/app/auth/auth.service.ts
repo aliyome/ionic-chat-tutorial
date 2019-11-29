@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { Auth } from './auth';
 
 @Injectable({
@@ -10,6 +10,7 @@ export class AuthService {
   constructor(
     private readonly afAuth: AngularFireAuth,
     private readonly navController: NavController,
+    private readonly alertController: AlertController,
   ) {}
 
   authSignUp(login: Auth) {
@@ -17,6 +18,7 @@ export class AuthService {
       .createUserWithEmailAndPassword(login.email, login.password)
       .then(() => this.navController.navigateForward('/'))
       .catch(error => {
+        this._alertError(error);
         throw error;
       });
   }
@@ -26,6 +28,7 @@ export class AuthService {
       .signInWithEmailAndPassword(login.email, login.password)
       .then(() => this.navController.navigateForward('/'))
       .catch(error => {
+        this._alertError(error);
         throw error;
       });
   }
@@ -35,7 +38,17 @@ export class AuthService {
       .signOut()
       .then(() => this.navController.navigateRoot('/auth/signin'))
       .catch(error => {
+        this._alertError(error);
         throw error;
       });
+  }
+
+  private async _alertError(error: any) {
+    const alert = await this.alertController.create({
+      header: error.code,
+      message: error.message,
+      buttons: ['閉じる'],
+    });
+    await alert.present();
   }
 }
